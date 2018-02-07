@@ -55,7 +55,28 @@ app.get("/", function (req, res) {
             })
         }
         })
-  }); 
+  });
+  
+  app.post("/user1", function (req, res) {
+    
+    MongoClient.connect('mongodb://localhost:27017/test', function (err, db) {
+        if (err) throw err
+        else{
+            db.collection('user').findOne({"_id":new ObjectId(req.body._id)},function (err, result) {
+                if (err) throw err
+                else {
+                    if (result) {
+                        res.json(result)
+                        
+                    }
+                   
+                }
+                db.close() 
+
+            })
+        }
+        })
+  });
 
   app.post("/user", function (req, res) {
   // console.log(JSON.stringify(req.body))
@@ -93,6 +114,10 @@ app.get("/", function (req, res) {
           })
 
   }); 
+
+
+
+
 
 
   app.put(
